@@ -51,44 +51,45 @@ class MainActivity : AppCompatActivity() {
 
     private fun validateLink(): Boolean {
 
-            when (radio_group.checkedRadioButtonId) {
+        when (radio_group.checkedRadioButtonId) {
 
-                R.id.glide_button -> {
-                    link = GLIDE_URL
-                    title = "Glide"
-                    description = getString(R.string.glide_radio_button)
-                }
-
-                R.id.app_button -> {
-                    link = APP_URL
-                    title = "Udacity Nanodegree Project"
-                    description = getString(R.string.current_app)
-
-                }
-
-                R.id.retrofit_button -> {
-                    link = RETROFIT_URL
-                    title = "Retrofit"
-                    description = getString(R.string.retrofit_radio_button)
-                }
-
-                else -> {
-                    link = ""
-                }
+            R.id.glide_button -> {
+                link = GLIDE_URL
+                title = "Glide"
+                description = getString(R.string.glide_radio_button)
             }
+
+            R.id.app_button -> {
+                link = APP_URL
+                title = "Udacity Nanodegree Project"
+                description = getString(R.string.current_app)
+
+            }
+
+            R.id.retrofit_button -> {
+                link = RETROFIT_URL
+                title = "Retrofit"
+                description = getString(R.string.retrofit_radio_button)
+            }
+
+            else -> {
+                link = ""
+            }
+        }
 
 
         if (link.isNotEmpty() && url.text?.isEmpty() == false) {
-            sendMsg("Select any 1 option for downloading")
+            sendMsg("Choose only 1 option for downloading")
             return false
         }
 
 
         if (url.text?.isNotEmpty() == true) {
             try {
-                val extension  = MimeTypeMap.getFileExtensionFromUrl(url.text.toString())
+                val extension = MimeTypeMap.getFileExtensionFromUrl(url.text.toString())
                 if (extension != null) {
-                    val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension).toString()
+                    val type =
+                        MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension).toString()
                     if (type != "application/zip") {
                         sendMsg("Enter a link with zipped file download format ")
                         return false
@@ -145,11 +146,6 @@ class MainActivity : AppCompatActivity() {
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            notificationManager.cancelAll()
-            notificationManager.sendNotification(
-                "Check the Download Status",
-                downloadID, R.drawable.success, applicationContext
-            )
         }
     }
 
@@ -204,6 +200,7 @@ class MainActivity : AppCompatActivity() {
             "https://github.com/bumptech/glide/archive/master.zip"
         private const val RETROFIT_URL =
             "https://github.com/square/retrofit/archive/master.zip"
+
         const val CHANNEL_ID = "channelId"
     }
 
